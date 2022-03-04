@@ -36,7 +36,7 @@ extern "C" {
         case 10:                                   \
             return PD_CALL_##CALL##_V10;           \
                                                    \
-        case 9:                                    \
+        case 2:                                    \
             return PD_CALL_##CALL##_V9;            \
                                                    \
         default:                                   \

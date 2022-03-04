@@ -75,6 +75,7 @@ parser_error_t parser_validate(const parser_context_t *ctx) {
     uint8_t numItems = 0;
     CHECK_PARSER_ERR(parser_getNumItems(ctx, &numItems))
 
+
     char tmpKey[40];
     char tmpVal[40];
 
@@ -134,6 +135,7 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
     parser_error_t err = parser_ok;
     if (displayIdx == FIELD_METHOD) {
         snprintf(outKey, outKeyLen, "%s", _getMethod_ModuleName(ctx->tx_obj->transactionVersion, ctx->tx_obj->callIndex.moduleIdx));
+
         snprintf(outVal, outValLen, "%s", _getMethod_Name(ctx->tx_obj->transactionVersion,
                                                           ctx->tx_obj->callIndex.moduleIdx,
                                                           ctx->tx_obj->callIndex.idx));
@@ -145,6 +147,7 @@ parser_error_t parser_getItem(const parser_context_t *ctx,
                                                  ctx->tx_obj->callIndex.moduleIdx,
                                                  ctx->tx_obj->callIndex.idx);
     uint8_t argIdx = displayIdx - 1;
+
 
 
     if (!parser_show_expert_fields()) {

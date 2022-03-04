@@ -1335,6 +1335,12 @@ parser_error_t _readMethod_V9(
     case 1284: /* module 5 call 4 */
         CHECK_ERROR(_readMethod_balances_transfer_all_V9(c, &method->basic.balances_transfer_all_V9))
         break;
+    case 1536: /* module 6 call 0 */
+        CHECK_ERROR(_readMethod_balances_transfer_V9(c, &method->nested.balances_transfer_V9))
+        break;
+    /*case 1539: [> module 6 call 3 <]*/
+        /*CHECK_ERROR(_readMethod_balances_transfer_keep_alive_V9(c, &method->nested.balances_transfer_keep_alive_V9))*/
+        /*break;*/
     case 1792: /* module 7 call 0 */
         CHECK_ERROR(_readMethod_staking_bond_V9(c, &method->basic.staking_bond_V9))
         break;
@@ -1865,6 +1871,8 @@ const char* _getMethod_ModuleName_V9(uint8_t moduleIdx)
     switch (moduleIdx) {
     case 5:
         return STR_MO_BALANCES;
+    case 6:
+        return STR_MO_BALANCES;
     case 7:
         return STR_MO_STAKING;
     case 9:
@@ -1931,6 +1939,10 @@ const char* _getMethod_Name_V9(uint8_t moduleIdx, uint8_t callIdx)
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
     switch (callPrivIdx) {
+    case 1536: /* module 6 call 0 */
+        return STR_ME_TRANSFER;
+    case 1539: /* module 6 call 3 */
+        return STR_ME_TRANSFER_KEEP_ALIVE;
     case 1280: /* module 5 call 0 */
         return STR_ME_TRANSFER;
     case 1282: /* module 5 call 2 */
@@ -2022,8 +2034,6 @@ const char* _getMethod_Name_V9(uint8_t moduleIdx, uint8_t callIdx)
         return STR_ME_SET_BALANCE;
     case 1285: /* module 5 call 5 */
         return STR_ME_FORCE_UNRESERVE;
-    case 1536: /* module 6 call 0 */
-        return STR_ME_SET_UNCLES;
     case 1801: /* module 7 call 9 */
         return STR_ME_SET_VALIDATOR_COUNT;
     case 1802: /* module 7 call 10 */
@@ -2473,6 +2483,10 @@ uint8_t _getMethod_NumItems_V9(uint8_t moduleIdx, uint8_t callIdx)
     uint16_t callPrivIdx = ((uint16_t)moduleIdx << 8u) + callIdx;
 
     switch (callPrivIdx) {
+    case 1536: /* module 6 call 0 */
+        return 2;
+    case 1539: /* module 6 call 3 */
+        return 2;
     case 1280: /* module 5 call 0 */
         return 2;
     case 1282: /* module 5 call 2 */
@@ -2873,6 +2887,25 @@ const char* _getMethod_ItemName_V9(uint8_t moduleIdx, uint8_t callIdx, uint8_t i
         default:
             return NULL;
         }
+
+    case 1536: /* module 6 call 0 */
+        switch (itemIdx) {
+        case 0:
+            return STR_IT_dest;
+        case 1:
+            return STR_IT_amount;
+        default:
+            return NULL;
+        }
+    /*case 1539: [> module 6 call 3 <]*/
+        /*switch (itemIdx) {*/
+        /*case 0:*/
+            /*return STR_IT_dest;*/
+        /*case 1:*/
+            /*return STR_IT_amount;*/
+        /*default:*/
+            /*return NULL;*/
+        /*}*/
     case 1792: /* module 7 call 0 */
         switch (itemIdx) {
         case 0:
@@ -4282,6 +4315,36 @@ parser_error_t _getMethod_ItemValue_V9(
         default:
             return parser_no_data;
         }
+    case 1536: /* module 6 call 0 */
+        switch (itemIdx) {
+        case 0: /* balances_transfer_V9 - dest */;
+            return _toStringLookupasStaticLookupSource_V9(
+                &m->nested.balances_transfer_V9.dest,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        case 1: /* balances_transfer_V9 - amount */;
+            return _toStringCompactBalance(
+                &m->nested.balances_transfer_V9.amount,
+                outValue, outValueLen,
+                pageIdx, pageCount);
+        default:
+            return parser_no_data;
+        }
+    /*case 1539: [> module 6 call 3 <]*/
+        /*switch (itemIdx) {*/
+        /*case 0: [> balances_transfer_keep_alive_V9 - dest <];*/
+            /*return _toStringLookupasStaticLookupSource_V9(*/
+                /*&m->nested.balances_transfer_keep_alive_V9.dest,*/
+                /*outValue, outValueLen,*/
+                /*pageIdx, pageCount);*/
+        /*case 1: [> balances_transfer_keep_alive_V9 - amount <];*/
+            /*return _toStringCompactBalance(*/
+                /*&m->nested.balances_transfer_keep_alive_V9.amount,*/
+                /*outValue, outValueLen,*/
+                /*pageIdx, pageCount);*/
+        /*default:*/
+            /*return parser_no_data;*/
+        /*}*/
     case 1792: /* module 7 call 0 */
         switch (itemIdx) {
         case 0: /* staking_bond_V9 - controller */;

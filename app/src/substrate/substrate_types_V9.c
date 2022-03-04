@@ -181,7 +181,7 @@ parser_error_t _readKey_V9(parser_context_t* c, pd_Key_V9_t* v) {
 }
 
 parser_error_t _readKeys_V9(parser_context_t* c, pd_Keys_V9_t* v) {
-    GEN_DEF_READARRAY(6 * 32)
+    GEN_DEF_READARRAY(4 * 32)
 }
 
 parser_error_t _readLeasePeriodOfT_V9(parser_context_t* c, pd_LeasePeriodOfT_V9_t* v)

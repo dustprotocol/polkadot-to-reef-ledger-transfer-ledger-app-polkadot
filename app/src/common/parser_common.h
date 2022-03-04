@@ -53,6 +53,11 @@ typedef enum {
     parser_tx_nesting_not_supported,
     parser_tx_nesting_limit_reached,
     parser_tx_call_vec_too_large,
+    parser_500,
+    parser_600,
+    parser_700,
+    parser_800,
+    parser_900
 } parser_error_t;
 
 typedef struct {
